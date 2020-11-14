@@ -335,8 +335,8 @@ public class SettingsManager
 
     public int printAllRulesToLog(String category)
     {
-        parseSettingsClass(CarpetSettings.class);
-        rules.get("language").set(server.getCommandSource(), "zh_cn");
+        CarpetSettings.language = "zh_cn";
+        Translations.updateLanguage(null);
         PrintStream ps = System.out;
         ps.println("# "+fancyName+" 设置");
         for (Map.Entry<String, ParsedRule<?>> e : new TreeMap<>(rules).entrySet())
