@@ -27,7 +27,7 @@ public abstract class Validator<T>
             return newValue;
         }
         @Override
-        public String description() { return "It has an accompanying command";}
+        public String description() { return "它有一个附带的命令";}
     }
 
     public static class _CLIENT<T> extends Validator<T>
@@ -38,9 +38,9 @@ public abstract class Validator<T>
             return newValue;
         }
         @Override
-        public String description() { return "Its a client command so can be issued when connecting to non-carpet servers. " +
-                "In client-server setting it will only affect the executing player, so each player needs to type it" +
-                " separately for the desired effect";}
+        public String description() { return "它是一个客户端命令，因此可以在连接到非地毯服务器时使用。" +
+                "在客户端+服务器的环境中，它只会影响执行执行命令的玩家，因此每个玩家都需要输入它" +
+                "已获得所需效果";}
     }
 
     public static class _COMMAND_LEVEL_VALIDATOR extends Validator<String> {
@@ -55,7 +55,7 @@ public abstract class Validator<T>
             }
             return userString.toLowerCase(Locale.ROOT);
         }
-        public String description() { return "Can be limited to 'ops' only, or a custom permission level";}
+        public String description() { return "只能为“ops”或自定义权限级别";}
     }
     
     public static class _SCARPET<T> extends Validator<T> {
@@ -65,7 +65,7 @@ public abstract class Validator<T>
             return newValue;
         }
         public String description() {
-            return "It controls an accompanying Scarpet App";
+            return "它控制着随附的 Scarpet 脚本";
         }
     }
 
@@ -87,7 +87,7 @@ public abstract class Validator<T>
         {
             if (!currentRule.options.contains(string))
             {
-                Messenger.m(source, "r Valid options: " + currentRule.options.toString());
+                Messenger.m(source, "r 可用的选项: " + currentRule.options.toString());
                 return null;
             }
             return newValue;
@@ -102,7 +102,7 @@ public abstract class Validator<T>
             if (!currentRule.options.stream().map(s->s.toLowerCase(Locale.ROOT)).collect(Collectors.toSet())
                     .contains(string.toLowerCase(Locale.ROOT)))
             {
-                Messenger.m(source, "r Valid options (case insensitive): " + currentRule.options.toString());
+                Messenger.m(source, "r 可用的选项 (大小写不敏感): " + currentRule.options.toString());
                 return null;
             }
             return newValue;
@@ -117,7 +117,7 @@ public abstract class Validator<T>
             return newValue.doubleValue() >= 0 ? newValue : null;
         }
         @Override
-        public String description() { return "Must be a positive number";}
+        public String description() { return "必须是一个非负数";}
     }
 
     public static class PROBABILITY <T extends Number> extends Validator<T>
@@ -128,6 +128,6 @@ public abstract class Validator<T>
             return (newValue.doubleValue() >= 0 && newValue.doubleValue() <= 1 )? newValue : null;
         }
         @Override
-        public String description() { return "Must be between 0 and 1";}
+        public String description() { return "必须介于0和1之间";}
     }
 }

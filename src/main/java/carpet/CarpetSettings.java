@@ -59,7 +59,7 @@ public class CarpetSettings
             strict = false,
             validate = LanguageValidator.class
     )
-    public static String language = "zh_cn";
+    public static String language = "none";
 
     /*
     These will be turned when events can be added / removed in code

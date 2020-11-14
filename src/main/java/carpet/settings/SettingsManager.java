@@ -335,6 +335,7 @@ public class SettingsManager
 
     public int printAllRulesToLog(String category)
     {
+        rules.get("language").set(server.getCommandSource(), "zh_cn");
         PrintStream ps = System.out;
         ps.println("# "+fancyName+" 设置");
         for (Map.Entry<String, ParsedRule<?>> e : new TreeMap<>(rules).entrySet())
@@ -349,7 +350,7 @@ public class SettingsManager
             ps.println("* 类型: `" + rule.type.getSimpleName() + "`  ");
             ps.println("* 默认值: `" + rule.defaultAsString + "`  ");
             String optionString = rule.options.stream().map(s -> "`" + s + "`").collect(Collectors.joining(", "));
-            ps.println((rule.isStrict?"* 要求":"* 建议")+" 选项: " + optionString + "  ");
+            ps.println((rule.isStrict?"* 要求":"* 建议")+"选项: " + optionString + "  ");
             ps.println("* 分类: " + rule.categories.stream().map(s -> "`" + s.toUpperCase(Locale.ROOT) + "`").collect(Collectors.joining(", ")) + "  ");
             boolean preamble = false;
             for (Validator<?> validator : rule.validators)
