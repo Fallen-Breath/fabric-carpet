@@ -3,8 +3,8 @@ package carpet.settings;
 import carpet.CarpetServer;
 import carpet.CarpetSettings;
 import carpet.network.ServerNetworkHandler;
-import carpet.utils.Translations;
 import carpet.utils.Messenger;
+import carpet.utils.Translations;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import com.mojang.brigadier.CommandDispatcher;
@@ -23,27 +23,13 @@ import net.minecraft.util.WorldSavePath;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.util.TriConsumer;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static carpet.utils.Translations.tr;
 import static carpet.script.CarpetEventServer.Event.CARPET_RULE_CHANGES;
+import static carpet.utils.Translations.tr;
 import static net.minecraft.command.CommandSource.suggestMatching;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -350,21 +336,21 @@ public class SettingsManager
     public int printAllRulesToLog(String category)
     {
         PrintStream ps = System.out;
-        ps.println("# "+fancyName+" Settings");
+        ps.println("# "+fancyName+" 设置");
         for (Map.Entry<String, ParsedRule<?>> e : new TreeMap<>(rules).entrySet())
         {
             ParsedRule<?> rule = e.getValue();
             if (category != null && !rule.categories.contains(category))
                 continue;
-            ps.println("## " + rule.name);
-            ps.println(rule.description+"  ");
-            for (String extra : rule.extraInfo)
+            ps.println("## " + rule.translatedName());
+            ps.println(rule.translatedDescription()+"  ");
+            for (String extra : rule.translatedExtras())
                 ps.println(extra + "  ");
-            ps.println("* Type: `" + rule.type.getSimpleName() + "`  ");
-            ps.println("* Default value: `" + rule.defaultAsString + "`  ");
+            ps.println("* 类型: `" + rule.type.getSimpleName() + "`  ");
+            ps.println("* 默认值: `" + rule.defaultAsString + "`  ");
             String optionString = rule.options.stream().map(s -> "`" + s + "`").collect(Collectors.joining(", "));
-            ps.println((rule.isStrict?"* Required":"* Suggested")+" options: " + optionString + "  ");
-            ps.println("* Categories: " + rule.categories.stream().map(s -> "`" + s.toUpperCase(Locale.ROOT) + "`").collect(Collectors.joining(", ")) + "  ");
+            ps.println((rule.isStrict?"* 要求":"* 建议")+" 选项: " + optionString + "  ");
+            ps.println("* 分类: " + rule.categories.stream().map(s -> "`" + s.toUpperCase(Locale.ROOT) + "`").collect(Collectors.joining(", ")) + "  ");
             boolean preamble = false;
             for (Validator<?> validator : rule.validators)
             {
@@ -372,7 +358,7 @@ public class SettingsManager
                 {
                     if (!preamble)
                     {
-                        ps.println("* Additional notes:  ");
+                        ps.println("* 附加说明:  ");
                         preamble = true;
                     }
                     ps.println("  * "+validator.description()+"  ");

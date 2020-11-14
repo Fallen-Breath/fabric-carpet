@@ -2,7 +2,7 @@ name: Update wiki
 on:
   push:
     branches: 
-      - master
+      - dump-cn-doc
     paths:
     - "src/main/java/carpet/CarpetSettings.java"
 jobs:
@@ -72,7 +72,7 @@ jobs:
           else
             to2="BUILD SUCCESSFUL"
           fi
-          a="$(cat settings-toProccess.txt)"; a="$(echo "${a#*"$from1"}")"; echo "$from1${a%%"$to2"*}" > wiki/Current-Available-Settings.md
+          a="$(cat settings-toProccess.txt)"; a="$(echo "${a#*"$from1"}")"; echo "$from1${a%%"$to2"*}" > wiki/Current-Available-Settings-CN.md
       - name: Commit updated wiki page
         continue-on-error: true
         run: |
