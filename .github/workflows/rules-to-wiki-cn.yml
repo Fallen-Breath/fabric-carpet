@@ -5,6 +5,7 @@ on:
       - dump-cn-doc
     paths:
     - "src/main/java/carpet/CarpetSettings.java"
+    - ".github/workflows/rules-to-wiki-cn.yml"
 jobs:
   Rules:
     runs-on: ubuntu-latest
@@ -72,12 +73,13 @@ jobs:
           else
             to2="BUILD SUCCESSFUL"
           fi
-          a="$(cat settings-toProccess.txt)"; a="$(echo "${a#*"$from1"}")"; echo "$from1${a%%"$to2"*}" > wiki/Current-Available-Settings-CN.md
+          a="$(cat settings-toProccess.txt)"; a="$(echo "${a#*"$from1"}")"; echo "$from1${a%%"$to2"*}" > wiki/Current-Available-Settings-zh_cn.md
       - name: Commit updated wiki page
         continue-on-error: true
         run: |
           cd wiki
           git config --global user.name '${{ github.event.pusher.name }}' # Looks better than "github-actions-bot"
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
           git commit -am "Update wiki for '${{ github.event.head_commit.message }}'"
           git push
