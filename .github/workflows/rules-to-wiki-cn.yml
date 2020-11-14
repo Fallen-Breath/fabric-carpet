@@ -3,9 +3,6 @@ on:
   push:
     branches: 
       - dump-cn-doc
-    paths:
-    - "src/main/java/carpet/CarpetSettings.java"
-    - ".github/workflows/rules-to-wiki-cn.yml"
 jobs:
   Rules:
     runs-on: ubuntu-latest

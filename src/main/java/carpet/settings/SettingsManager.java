@@ -335,6 +335,7 @@ public class SettingsManager
 
     public int printAllRulesToLog(String category)
     {
+        parseSettingsClass(CarpetSettings.class);
         rules.get("language").set(server.getCommandSource(), "zh_cn");
         PrintStream ps = System.out;
         ps.println("# "+fancyName+" 设置");
