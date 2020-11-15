@@ -717,4 +717,13 @@ public class CarpetSettings
             category = {SURVIVAL, CLIENT}
     )
     public static boolean cleanLogs = false;
+
+    @Rule(
+            desc = "Whether block changes will cause POI to updates or not",
+            extra = {
+                    "Set it to `false` to disable POI updates"
+            },
+            category = {CREATIVE}
+    )
+    public static boolean poiUpdates = true;
 }

@@ -237,6 +237,10 @@
   "rule.spawnChunksSize.desc": "更改出生点永久加载区块半径",
   "rule.spawnChunksSize.extra.0": "定义新半径\n设为0以禁用出生点区块加载",
 
+  "rule.poiUpdates.name": "POI更新开关",
+  "rule.poiUpdates.desc": "方块变化时是否会更新POI",
+  "rule.poiUpdates.extra.0": "将其设为 `false` 以禁用POI更新",
+
 
   "category.bugfix": "漏洞修复",
   "category.survival": "生存",
