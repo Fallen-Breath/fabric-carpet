@@ -9,6 +9,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.PortalForcer;
+import org.spongepowered.asm.mixin.Dynamic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -52,9 +53,11 @@ public class PortalForcer_portalSuffocationMixin
     }
 
 
-    @Redirect(method = "method_22391",at = @At(
+    @Dynamic
+    @Redirect(method = "method_22391", remap = false, at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/block/pattern/BlockPattern$Result;getTeleportTarget(Lnet/minecraft/util/math/Direction;Lnet/minecraft/util/math/BlockPos;DLnet/minecraft/util/math/Vec3d;D)Lnet/minecraft/block/pattern/BlockPattern$TeleportTarget;"
+            target = "Lnet/minecraft/block/pattern/BlockPattern$Result;getTeleportTarget(Lnet/minecraft/util/math/Direction;Lnet/minecraft/util/math/BlockPos;DLnet/minecraft/util/math/Vec3d;D)Lnet/minecraft/block/pattern/BlockPattern$TeleportTarget;",
+            remap = true
     ))
     private BlockPattern.TeleportTarget newResult(BlockPattern.Result portal, Direction direction_1, BlockPos blockPos_1, double height_position_from_top, Vec3d vec3d_1, double width_position)
     {

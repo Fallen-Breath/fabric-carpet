@@ -85,9 +85,10 @@ public abstract class ServerChunkManagerMixin implements ServerChunkManagerInter
     }
 
     @SuppressWarnings("UnresolvedMixinReference")
-    @Redirect(method = "method_20801", at = @At(
+    @Redirect(method = "method_20801", remap = false, at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/SpawnHelper;spawnEntitiesInChunk(Lnet/minecraft/entity/EntityCategory;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/util/math/BlockPos;)V"
+            target = "Lnet/minecraft/world/SpawnHelper;spawnEntitiesInChunk(Lnet/minecraft/entity/EntityCategory;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/util/math/BlockPos;)V",
+            remap = true
     ))
     // inject our repeat of spawns if more spawn ticks per tick are chosen.
     private void spawnMultipleTimes(EntityCategory entityCategory_1, ServerWorld world_1, WorldChunk worldChunk_1, BlockPos blockPos_1)
@@ -99,9 +100,10 @@ public abstract class ServerChunkManagerMixin implements ServerChunkManagerInter
     }
 
     @SuppressWarnings("UnresolvedMixinReference")
-    @Redirect(method = "method_20801", at = @At(
+    @Redirect(method = "method_20801", remap = false, at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/entity/EntityCategory;getSpawnCap()I"
+            target = "Lnet/minecraft/entity/EntityCategory;getSpawnCap()I",
+            remap = true
     ))
     // allows to change mobcaps and captures each category try per dimension before it fails due to full mobcaps.
     private int getNewMobcaps(EntityCategory entityCategory)

@@ -13,10 +13,7 @@ import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -98,10 +95,12 @@ public abstract class ThreadedAnvilChunkStorage_scarpetChunkCreationMixin implem
     //in method_20617
     //method_19534(Lnet/minecraft/server/world/ChunkHolder;Lnet/minecraft/world/chunk/Chunk;)Ljava/util/concurrent/CompletableFuture;
     // incmopatibility with optifine makes this mixin fail.
-    @Inject(method = "method_19534", require = 0, at = @At(
+    @Dynamic
+    @Inject(method = "method_19534", require = 0, remap = false, at = @At(
         value = "INVOKE",
         target = "Lnet/minecraft/server/world/ThreadedAnvilChunkStorage;convertToFullChunk(Lnet/minecraft/server/world/ChunkHolder;)Ljava/util/concurrent/CompletableFuture;",
-        shift = At.Shift.AFTER
+        shift = At.Shift.AFTER,
+        remap = true
     ))
     private void onChunkGenerated(final ChunkHolder chunkHolder, final Chunk chunk, final CallbackInfoReturnable<CompletableFuture> cir)
     {

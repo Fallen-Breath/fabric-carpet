@@ -44,7 +44,8 @@ public abstract class CommandManagerMixin
 
     @Redirect(method = "execute", at = @At(
             value = "INVOKE",
-            target = "Lorg/apache/logging/log4j/Logger;isDebugEnabled()Z"
+            target = "Lorg/apache/logging/log4j/Logger;isDebugEnabled()Z",
+            remap = false
     ))
     private boolean doesOutputCommandStackTrace(Logger logger)
     {
