@@ -19,13 +19,8 @@ import static carpet.script.CarpetEventServer.Event.NETHER_TICK;
 import static carpet.script.CarpetEventServer.Event.TICK;
 
 @Mixin(MinecraftServer.class)
-public abstract class MinecraftServer_scarpetMixin extends ReentrantThreadExecutor<ServerTask> implements MinecraftServerInterface
+public abstract class MinecraftServer_scarpetMixin implements MinecraftServerInterface
 {
-    public MinecraftServer_scarpetMixin(String string_1)
-    {
-        super(string_1);
-    }
-
     @Shadow protected abstract void tick(BooleanSupplier booleanSupplier_1);
 
     @Shadow private long timeReference;

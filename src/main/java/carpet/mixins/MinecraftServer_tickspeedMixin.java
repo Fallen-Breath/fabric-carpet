@@ -3,11 +3,9 @@ package carpet.mixins;
 import carpet.helpers.TickSpeed;
 import carpet.utils.CarpetProfiler;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.ServerTask;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Util;
 import net.minecraft.util.profiler.DisableableProfiler;
-import net.minecraft.util.thread.ReentrantThreadExecutor;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.BooleanSupplier;
 
 @Mixin(MinecraftServer.class)
-public abstract class MinecraftServer_tickspeedMixin extends ReentrantThreadExecutor<ServerTask>
+public abstract class MinecraftServer_tickspeedMixin
 {
     @Shadow private volatile boolean running;
 
@@ -33,11 +31,6 @@ public abstract class MinecraftServer_tickspeedMixin extends ReentrantThreadExec
     @Shadow private boolean profilerStartQueued;
 
     @Shadow @Final private DisableableProfiler profiler;
-
-    public MinecraftServer_tickspeedMixin(String name)
-    {
-        super(name);
-    }
 
     @Shadow protected abstract void tick(BooleanSupplier booleanSupplier_1);
 
@@ -52,6 +45,8 @@ public abstract class MinecraftServer_tickspeedMixin extends ReentrantThreadExec
     @Shadow private volatile boolean loading;
 
     @Shadow public abstract Iterable<ServerWorld> getWorlds();
+
+    @Shadow protected abstract boolean method_20415();
 
     CarpetProfiler.ProfilerToken currentSection;
 
@@ -142,14 +137,13 @@ public abstract class MinecraftServer_tickspeedMixin extends ReentrantThreadExec
 
 
     private boolean runEveryTask() {
-        if (super.runTask()) {
+        if (this.method_20415()) {
             return true;
         } else {
-            if (true) { // unconditionally this time
-                for(ServerWorld serverlevel : getWorlds()) {
-                    if (serverlevel.getChunkManager().executeQueuedTasks()) {
-                        return true;
-                    }
+            // remove if check in method_20415
+            for(ServerWorld serverlevel : getWorlds()) {
+                if (serverlevel.getChunkManager().executeQueuedTasks()) {
+                    return true;
                 }
             }
 
