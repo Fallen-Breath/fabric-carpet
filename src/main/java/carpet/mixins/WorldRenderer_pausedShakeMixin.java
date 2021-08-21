@@ -19,7 +19,7 @@ public class WorldRenderer_pausedShakeMixin
 
     @ModifyVariable(method = "render", argsOnly = true, ordinal = 0 ,at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/world/ClientWorld;getEntities()Ljava/lang/Iterable;"
+            target = "Lnet/minecraft/client/render/BufferBuilderStorage;getEntityVertexConsumers()Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;"
     ))
     private float changeTickPhase(float previous)
     {
