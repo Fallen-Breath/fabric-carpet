@@ -40,6 +40,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Group;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -111,7 +112,8 @@ public abstract class ThreadedAnvilChunkStorage_scarpetChunkCreationMixin implem
     // in convertToFullChunk
     // fancier version of the one below, ensuring that the event is triggered when the chunk is actually loaded.
     @SuppressWarnings("UnresolvedMixinReference")
-    @Inject(method = "lambda$protoChunkToFullChunk$28", at = @At("HEAD"))
+    @Group(min = 1, max = 1, name = "start")
+    @Inject(method = {"lambda$protoChunkToFullChunk$28", "method_20460"}, at = @At("HEAD"))
     private void onChunkGeneratedStart(ChunkHolder chunkHolder, Either<ChunkAccess, ChunkLoadingFailure> chunk, CallbackInfoReturnable<CompletableFuture<Either<ChunkAccess, ChunkLoadingFailure>>> cir)
     {
         if (CHUNK_GENERATED.isNeeded() || CHUNK_LOADED.isNeeded())
@@ -125,7 +127,8 @@ public abstract class ThreadedAnvilChunkStorage_scarpetChunkCreationMixin implem
     }
 
     @SuppressWarnings("UnresolvedMixinReference")
-    @Inject(method = "lambda$protoChunkToFullChunk$28", at = @At("RETURN"))
+    @Group(min = 2, max = 2, name = "end")
+    @Inject(method = {"lambda$protoChunkToFullChunk$28", "method_20460"}, at = @At("RETURN"))
     private void onChunkGeneratedEnd(ChunkHolder chunkHolder, Either<ChunkAccess, ChunkLoadingFailure> chunk, CallbackInfoReturnable<CompletableFuture<Either<ChunkAccess, ChunkLoadingFailure>>> cir)
     {
         Boolean localGenerated= generated.get();

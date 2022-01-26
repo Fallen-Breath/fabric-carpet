@@ -3,6 +3,7 @@ package carpet.mixins;
 import carpet.CarpetSettings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Group;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.function.Predicate;
@@ -12,7 +13,8 @@ import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplie
 public interface StructureGeneratorFactory_plopMixin
 {
     @SuppressWarnings("UnresolvedMixinReference")
-    @Redirect(method = "lambda$simple$0(Ljava/util/function/Predicate;Ljava/util/Optional;Lnet/minecraft/world/level/levelgen/structure/pieces/PieceGeneratorSupplier$Context;)Ljava/util/Optional;", at = @At(
+    @Group(min = 1, max = 1)
+    @Redirect(method = {"lambda$simple$0", "method_39845"}, at = @At(
             value = "INVOKE",
             target = "java/util/function/Predicate.test(Ljava/lang/Object;)Z"
     ))
